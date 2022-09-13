@@ -79,6 +79,6 @@ func Test_Division(t *testing.T) {
 	expected := a / b
 
 	if got := Division(a, b); got != expected {
-		t.Errorf("Add(%d, %d) = %d, didn't return %d", a, b, got, expected)
+		t.Errorf("Division(%d, %d) = %d, didn't return %d", a, b, got, expected)
 	}
 }
