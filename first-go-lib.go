@@ -14,6 +14,7 @@ import (
 )
 
 var ErrOverflow = errors.New("integer overflow")
+var ErrZeroDivision = errors.New("division by zero")
 
 // Add Returns the sum of two integer numbers.
 // In case of integer overflow, the function returns: 0, error.
@@ -56,6 +57,9 @@ func Multiply(a int, b int) (int, error) {
 
 // Division  Returns the division of two integer numbers.
 // Only quotient is returned, remainder is ignored.
-func Division(a int, b int) int {
-	return a / b
+func Division(a int, b int) (int, error) {
+	if b == 0 {
+		return 0, ErrZeroDivision
+	}
+	return a / b, nil
 }

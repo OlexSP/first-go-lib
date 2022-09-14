@@ -74,11 +74,22 @@ func Test_Multiply(t *testing.T) {
 }
 
 func Test_Division(t *testing.T) {
-	a := 10
-	b := 2
-	expected := a / b
-
-	if got := Division(a, b); got != expected {
-		t.Errorf("Division(%d, %d) = %d, didn't return %d", a, b, got, expected)
+	tests := map[string]struct {
+		a      int
+		b      int
+		exp    int
+		expErr error
+	}{
+		"success":       {a: 10, b: 2, exp: 5, expErr: nil},
+		"zero division": {a: 2, b: 0, exp: 0, expErr: ErrZeroDivision},
+	}
+	for name, data := range tests {
+		got, err := Division(data.a, data.b)
+		if err != nil && err != data.expErr {
+			t.Errorf("[%s] unexpected error. expected:\"%s\", got:\"%s\"", name, data.expErr, err)
+		}
+		if got != data.exp || err != data.expErr {
+			t.Errorf("[%s] expected: %v, %v; got %v, %v", name, data.exp, data.expErr, got, err)
+		}
 	}
 }
